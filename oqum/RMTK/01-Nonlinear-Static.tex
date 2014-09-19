@@ -44,12 +44,18 @@ These options and others need to be defined in the initial section of the script
 \begin{itemize}
 \item Results from a static pushover analysis: either displacements vs base shear at each time step, as shown in Figure~\ref{fig:expPushover}, or idealised pushover curve, as shown in Figure~\ref{fig:expIdealised}.
 
-\begin{figure}[H]
-\centering
-\includegraphics{./figures/IdealisedCurve.png}
-\caption{Pushover curve.}
-\label{fig:expPushover}
-\end{figure}
+%\begin{figure}[H]
+%\centering
+%\includegraphics{./figures/IdealisedCurve.pdf}
+%\caption{Pushover curve.}
+%\label{fig:expPushover}
+%\end{figure}
+
+\begin{pspicture}(0,0)(6cm,6cm)
+	\psframe[fillstyle=solid,linecolor=white,fillcolor=white]
+		(0.0cm,6.0cm)(6cm,6cm)	
+	\rput[l](0cm,6cm){\includegraphics[width=5cm,height=5cm]{./Figures/regression_R3.eps}}
+\end{pspicture}
 
 \begin{figure}[H]
 \centering
@@ -509,4 +515,3 @@ The R-$\mu$-T-based procedure presented herein is applicable to any kind of mult
 
 \subsubsection{Single Building Fragility and Vulnerability function}
 \label{subsubsec:single-building-DF}
-
