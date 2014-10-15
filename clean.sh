@@ -10,6 +10,7 @@ rm *.dvi
 rm *.glg
 rm *.glo
 rm *.gls
+rm *.glsdefs
 rm *.idx
 rm *.ilg
 rm *.ind

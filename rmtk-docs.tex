@@ -14,12 +14,12 @@
 \documentclass[12pt,a4paper,headings=small,version=last,dvips]{scrbook}
 %\documentclass[12pt,a4paper,headings=small,version=first,dvips]{scrbook}
 % --------------------------------------------------------------------- Packages
-\input{misc/configuration.tex}
+\input{./configuration/configuration.tex}
 % =============================================================== BEGIN DOCUMENT
 % -------------------------------------------------- Title and table of contents
 \begin{document}
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Load the glossary
-\input{"misc/glossary.tex"}
+\input{"./tex/glossary.tex"}
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Cover
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Cover
 %  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Second page
@@ -45,13 +45,13 @@
 \part{Risk Modeller's Toolkit}
 % ------------------------------------------------------------------------------
 \chapter{Nonlinear Static Method with dispersion information}
-	\input{./oqum/RMTK/01-Nonlinear-Static.tex}
+	\input{./tex/nonlinear-static.tex}
 \chapter{Nonlinear Dynamic Method}
-	\input{./oqum/RMTK/02-Nonlinear-Dynamic.tex}
+	\input{./otex/nonlinear-dynamic.tex}
 % ==============================================================================
 % ----------------------------------------------------------------- Bibliography
 \bibliographystyle{apalike}
-\bibliography{./Bibliography/RMTK.bib}
+\bibliography{./bibliography/rmtk.bib}
 % ==============================================================================
 % ------------------------------------------------------------------- Back Cover
 \end{document}
