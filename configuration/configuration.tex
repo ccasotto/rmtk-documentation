@@ -1,154 +1,129 @@
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{3}
-% This is used to create the cover and to plot trees
-\usepackage{pst-tree}
-\usepackage{pstricks,pstricks-add,multido}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Legrand Orange Book
+% LaTeX Template
+% Version 1.4 (12/4/14)
 %
-\usepackage{geometry}
-\usepackage{moresize}
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
 %
-%\usepackage{algorithmic}
-% 
-\usepackage{fancyvrb}
-\usepackage{listings}
-\usepackage{alltt}
-\usepackage{gensymb}
-% 
-\usepackage{pbox}
-% http://en.wikibooks.org/wiki/LaTeX/Indexing
-\usepackage{makeidx} 
-\makeindex
+% Original author:
+% Mathias Legrand (legrand.mathias@gmail.com)
 %
-\usepackage{subfigure}
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
 %
-\usepackage{bm}
-% Landscape package
-\usepackage{lscape}
+% Compiling this template:
+% This template uses biber for its bibliography and makeindex for its index.
+% When you first open the template, compile it from the command line with the 
+% commands below to make sure your LaTeX distribution is configured correctly:
 %
-\usepackage{hyperref} 
-\hypersetup{colorlinks=true}
-\hypersetup{breaklinks=true}
-% package for multiline comments
+% 1) pdflatex rmtk-docs
+% 1a) pdflatex -shell-escape rmtk-docs
+% 2) makeindex rmtk-docs.idx -s StyleInd.ist
+% 3) biber rmtk-docs
+% 4  makeglossaries rmtk-docs
+% 4) pdflatex rmtk-docs x 2
+%
+% After this, when you wish to update the bibliography/index use the appropriate
+% command above and make sure to compile with pdflatex several times 
+% afterwards to propagate your changes to the document.
+%
+% This template also uses a number of packages which may need to be
+% updated to the newest versions for the template to compile. It is strongly
+% recommended you update your LaTeX distribution if you have any
+% compilation errors.
+%
+% Important note:
+% Chapter heading images should have a 2:1 width:height ratio,
+% e.g. 920px width and 460px height.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt,fleqn]{book} % Default font size and left-justified equations
+
+\usepackage[top=3cm,bottom=3cm,left=3.2cm,right=3.2cm,headsep=10pt,a4paper]{geometry} % Page margins
+
+\usepackage{xcolor} % Required for specifying colors by name
+\definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
+
+% Font Settings
+\usepackage{avant} % Use the Avantgarde font for headings
+%\usepackage{times} % Use the Times font for headings
+\usepackage{mathptmx} % Use the Adobe Times Roman as the default text font together with math symbols from the Sym­bol, Chancery and Com­puter Modern fonts
+
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[utf8]{inputenc} % Required for including letters with accents
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+
+% Bibliography
+\usepackage{csquotes}
+\usepackage[style=alphabetic,
+            sorting=nyt,
+            sortcites=true,
+            natbib=true,
+            style=authoryear,
+            maxcitenames=2,
+            maxbibnames=100,
+            autopunct=true,
+            babel=hyphen,
+            hyperref=true,
+            doi=true,
+            abbreviate=false,
+            backref=true,
+            backend=biber,
+	    	uniquename=false,
+	    	uniquelist=false]{biblatex}
+\addbibresource{./bibliography/rmtk.bib} % BibTeX bibliography file
+\defbibheading{bibempty}{}
+
+% Figure caption settings
+\usepackage[textfont=it,margin=10pt,font=small,labelfont=bf,labelsep=endash]{caption}
+\usepackage{subcaption}
+\usepackage{rotating}
+
+% Table - colors from
 \usepackage{verbatim}
+\usepackage{color, colortbl}
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+
+% Index
+\usepackage{calc} % For simpler calculation - used for spacing the index letter headings correctly
+\usepackage{makeidx} % Required to make an index
+% \setcounter{tocdepth}{3}    % entries down to \subsubsections in the TOC
+\makeindex % Tells LaTeX to create the files required for indexing
+
+\usepackage{todonotes}
+\usepackage{geometry}
+\usepackage{marginnote}
+
 %
 % Package to create a glossary - It must be uploaded after hyperref
 % to produce the glossary: makeglossaries OQB
 \usepackage[acronym,nonumberlist,style=altlist]{glossaries}
 \glstoctrue
 \makeglossaries
+
+% package for bold symbols
+\usepackage{bm}
+
+% for better looking tables
+\usepackage{ctable}
+\usepackage{microtype}
+
+% for listing Python code
+\usepackage{listings}
+
 %
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Setting Fonts
-\renewcommand{\encodingdefault}{OT1}
-\renewcommand{\familydefault}{cmss}
-\renewcommand{\seriesdefault}{m}
-\renewcommand{\shapedefault}{up}
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\usepackage{amsmath}
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\usepackage{titlesec}
-\usepackage[dvips]{graphicx}
-% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\usepackage{type1cm,eso-pic,color}
-%\makeatletter
-%\AddToShipoutPicture{
-%    \setlength{\@tempdimb}{.5\paperwidth}
-%    \setlength{\@tempdimc}{.5\paperheight}
-%    \setlength{\unitlength}{1pt}
-%    \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){
-%        \makebox(0,0){\rotatebox{55}{
-%        	\textcolor[gray]{0.85}{
-%        		\fontsize{5cm}{5cm}
-%        		\selectfont{DRAFT}}
-%        	}
-%        }
-%	}
-%}
-%\makeatother
-%
-% Solves problems with margin notes
-\usepackage{mparhack} 
-	\setlength{\marginparwidth}{1.1in}
-	\let\oldmarginpar\marginpar
-	\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedright\color{red01}
-	\footnotesize #1]%
-	{\raggedright\footnotesize #1}}
-% Define some colors
-	\definecolor{blue01}{RGB}{4,64,116}
-	\definecolor{blue02}{RGB}{0,62,113}
-	\definecolor{gray01}{rgb}{0.1,0.1,0.1}
-	\definecolor{gray02}{rgb}{0.8,0.8,0.8}
-	\definecolor{red01}{rgb}{0.5,0.0,0.0}
-	\definecolor{orange00}{rgb}{1.0,0.74,0.53}
-	\definecolor{orange01}{rgb}{0.9137,0.5882,0.0980}
-	\definecolor{orange02}{rgb}{0.7608,0.4157,0.1804}
-	\definecolor{orange03}{rgb}{0.6941,0.1843,0.1333}
-\usepackage[english]{babel}
-% Bibliography settings
-\usepackage[square,colon]{natbib} % Extend bibligraphy functions
-% Figure caption settings
-\usepackage[textfont=it,margin=10pt,font=small,labelfont=bf,labelsep=endash]{caption}
-% Page numbering by Chapter
-%\usepackage[auto]{chappg} 
-%\pagenumbering{bychapter}
-% 
-% Define page properties
-\usepackage{scrpage2}
-	\pagestyle{scrheadings}
-	\lofoot[]{\includegraphics[width=2.0cm]{./figures/openquake_logo1.eps}}
-	\refoot[]{\includegraphics[width=2.0cm]{./figures/openquake_logo1.eps}}
-	\renewcommand{\partpagestyle}{empty}
-% - - - - - - - - - - - - - - - - - - - - - - - - - -  Reformatting PART Titles
-\titleformat{\part}[display]
-{\filleft\normalfont\sffamily}
-{\textcolor{blue01}{\bfseries\large PART}\hspace{4pt}
-	\bfseries\Huge\textcolor{blue01}{\thepart}}
-{1pc}
-{\Huge\bfseries\textcolor{blue01}}
-[]
-% - - - - - - - - - - - - - - - - - - - - - - - - - Reformatting CHAPTER Titles
-% Titles: CHAPTER
-\titleformat{\chapter}
-	[display] % shape
-	{\filleft\normalfont\sffamily} % format
-	{\textcolor{blue01}{\bfseries\MakeUppercase{\chaptertitlename}} % label
-		\hspace{4pt}\huge\bfseries\textcolor{blue01}{\thechapter}} 
-	{1pc} % sep
-	{\huge\bfseries\textcolor{blue01}} % Before
-	[]
-% - - - - - - - - - - - - - - - - - - - - - - - - - Reformatting SECTION Titles
-% Titles: SECTION
-\titleformat{\section}
-	[hang] % shape
-	{\vspace{.8ex}\Large\bfseries\color{blue01}} % format 
-	{\textcolor{blue01}{\thesection.}} % label
-	{.5em} % sep
-	{} % before
-	[] % after
-% - - - - - - - - - - - - - - - - - - - - - - -  Reformatting SUBSECTION Titles
-% Title: SUBSECTION
-\titleformat{\subsection}
-	[hang] % shape
-	{\vspace{.8ex}\large\bfseries\color{blue01}} % format 
-	{\textcolor{blue01}{\thesubsection.}} % label
-	{.5em} % sep
-	{} % before
-	[] % after
-%  - - - - - - - - - - - - - - - - - - - - -  Reformatting SUBSUBSECTION Titles 
-% Title: SUBSUBSECTION
-\titleformat{\subsubsection}
-	[hang] % shape
-	{\vspace{.8ex}\normalfont\bfseries\color{blue01}} % format 
-	{\textcolor{blue01}{\thesubsubsection.}} % label
-	{.5em} % sep
-	{} % before
-	[] % after
-% - - - - - - - - - - - - - - - - - - - - - - -  Reformatting PARAGRAPH Titles 
-% Title: PARAGRAPH
-\titleformat{\paragraph}
-	[hang] % shape
-	{\vspace{.8ex}\normalfont\bfseries\color{blue01}} % format 
-	{} % label
-	{.5em} % sep
-	{} % before
-	[] % after
+%----------------------------------------------------------------------------------------
+% Trees
+%\usepackage[pdf]{pstricks}
+%\usepackage{auto-pst-pdf}
+%\usepackage{pst-tree}
 %
