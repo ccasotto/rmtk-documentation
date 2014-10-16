@@ -1,0 +1,257 @@
+The aim of this procedure, proposed by Vamvatsikos (2014), is the estimation of the median spectral acceleration value $\hat{S}_{a,ds}$, that brings the structure to the attainment of a set of damage states ds, and the corresponding dispersion beta $\beta_{S_a}$, the parameters needed for the mathematical representation of fragility in equation \ref{eq:fragility-definition}. The aim is achieved making use of the work by Ruiz-Garcia and Miranda (2007), where the inelastic displacement demand is related to the elastic displacement with a simple relationship, and it can thus be easily estimated through a response spectrum analysis and a capacity curve.
+
+The C$_R$-based procedure presented herein is applicable to bilinear elasto-plastic capacity curve only, and it is suitable for single building fragility curve estimation, as described in section \ref{subsubsec:single-building}. However the fragility curves derived for single buildings can be combined in a unique fragility curve, which considers the inter-building uncertainty, as described in section \ref{subsubsec:multiple-building}.
+
+\subsubsection{Single Building Fragility and Vulnerability function}
+\label{subsubsec:single-building}
+This procedure provides a simple relationship between median damage state threshold, expressed in terms of top displacement $\delta_{roof}$, at each damage state threshold ds, and the corresponding median elastic Spectral displacement value $\hat{S}_{d,ds}(T_1)$.
+
+\begin{equation}
+\hat{\delta}_{roof, ds} = C_R S_{d, ds}(T_1) \Gamma_1 \Phi_1
+\end{equation}
+
+where $\Gamma_1 \Phi_1$ is the first mode participation factor estimated for the first-mode shape normalised by the roof displacement, and C$_R$ is the inelastic displacement ratio (inelastic over elastic spectral displacement), computed by Ruiz-Garcia and Miranda (2007) for nonlinear SDoF systems having hysteretic behaviour representative of the analysed structure, which is a function of the first-mode period of vibration and the relative lateral strength of the system R. Therefore the median Spectral acceleration at the fundamental period of vibration $\hat{S}_{a,ds}(T_1)$ turns out to be expressed as a function of the roof displacement according to the following equation:
+
+\begin{equation}
+\hat{S}_{a,ds}(T_1) = \frac{4 \pi^2}{\hat{C}_R T^2 \Gamma_1 \Phi_1} \hat{\delta}_{roof, ds}
+\label{eq:Sa_RGM}
+\end{equation}
+
+Default values of $\hat{C}_R$ parameter estimates are provided by Ruiz-Garcia and Miranda (2007), as result of nonlinear regression analysis of three different measures of central tendency computed from 240 ground motions:
+
+\begin{equation}
+\hat{C}_R = 1 + \frac{R - 1}{79.12 T_1 ^{1.98}}
+\label{eq:Cr_RGM}
+\end{equation}
+
+and values for R are given as:
+
+\begin{equation}
+R_{ds} = max(0.425(1 - c + \sqrt{c^2 + 2c(2 \mu_{ds} - 1) + 1}),1)
+\label{eq:R_RGM}
+\end{equation}
+
+where c = 79.12 T$^{1.98}$, and $\mu_{ds}$ is the ductility at the damage state threshold of interest.
+
+For what concerns the dispersion of $\hat{S}_{a,ds}$, $\beta_{S_a}$, the following relationship between S and the median EDP damage threshold $\hat{\theta}$ (Cornell, 2002) is used:
+
+\begin{equation}
+\hat{\theta}(S_a) = a S_a^b
+\end{equation}
+
+so that $\beta_{S_a}$ can be easily derived from the dispersion of $\theta$ due to record-to-record variability, $\beta_{\theta d}$, as in the following:
+
+\begin{equation}
+\beta_{S_a} = \frac{1}{b} \beta_{\theta d}
+\label{eq:betaSa_RGM}
+\end{equation}
+
+The dispersion of $\theta$ due to record-to-record variability, $\beta_{\theta d}$ can be easily combined with the dispersion of $\theta$ due to uncertainty in the damage state threshold $\beta_{\theta c}$ as shown in the following equation:
+
+\begin{equation}
+\beta_{S_a} = \frac{1}{b} \sqrt{\beta_{\theta d}^2 + \beta_{\theta c}^2}
+\label{eq:betaSc_RGM}
+\end{equation}
+
+The dispersion of $\theta$ can be obtained assuming that $d_{roof}$ and $\theta$ are proportional, and they thus share the same dispersion. Moreover the dispersion of $d_{roof}$ is the same as the dispersion of C$_R$, since they are also proportional. Finally $\beta_{\theta d}$ can be computed with the following equation, which represents Ruiz-Garcia and Miranda's (2007) estimate of C$_R$ dispersion:
+
+\begin{equation}
+\sigma_{\ln(C_R)} = \sigma_{\ln(d_{roof})} = \beta_{\theta d} =  1.975 [\frac{1}{5.876} + \frac{1}{11.749 (T + 0.1)}] [1- \exp(-0.739 (R - 1))]
+\label{eq:beta_eq_RGM}
+\end{equation}
+
+To derive a discrete vulnerability function at certain intensity measure levels, the input damage-to-loss factors are applied to the probability of occurance of each damage state, extracted from the probability of exceedance of each damage state described by the fragility function. A value of loss ratio is thus defined for the vector of selected intensity measure levels.
+
+\subsubsection{Multiple-Building Fragility and Vulnerability function}
+\label{subsubsec:multiple-buildings}
+If multiple buildings have been input to derive fragility function for a class of buildings all $\hat{S}_{a, blg}$ and $\beta_{S_a, blg}$ are combined in a single lognormal curve. A minimum of 5 buildings should be considered to obtain reliable results for the class. 
+A new issue arises when multiple buildings are considered: the S$_a$ at the fundamental period of each building should be converted to a common intensity measure, to be able to combine the different fragility functions. A common intensity measure is selected to be S$_a$ at the period T$_{av}$, which is a weighted average of the individual buildings fundamental period T$_1$. Then each individual fragility needs to be expressed in terms of the common S$_a$(T$_{av}$), using a spectrum. FEMA P-695 far field set of 22 accelerograms was used to derive a mean uniform hazard spectrum, and the ratio between the S$_a$ at different periods is used to scale the fragility functions. It can be noted that the actual values of the spectrum are not important, but just the spectral shape. 
+Median $\hat{S}_a$ is converted to the mean $\mu_{ln(S_a)}$ of the corresponding normal distribution ($\mu_{ln(S_a)} = ln(\hat{S}_a)$) and, simply scaled to the common intensity measure as follows:
+
+\begin{equation}
+\mu_{ln(S_a), blg} = \mu_{ln(S_a), blg} S(T_{av})/ S(T_{1, blg})
+\end{equation}
+\begin{equation}
+\beta_{S_a, blg} = \beta_{S_a, blg} S(T_{av})/ S(T_{1, blg})
+\label{eq:Sa(Tav)}
+\end{equation}
+
+Finally the parameters of the single lognormal curve for the class of buildings, mean and dispersion, can be computed as the weighted mean of the single means and the weighted SRSS of the inter-building and intra-building standard deviation, the standard deviation of the single means and the single dispersions respectively, as shown in the following equations:
+
+\begin{equation}
+\mu_{ln(S_a), tot} = \sum_{i=0}^{n.blg} w_{blg-i} \mu_{ln(S_a), blg-i}
+\label{eq:combination-lognormals-mu}
+\end{equation}
+\begin{equation}
+\beta_{S_a, tot} = \sqrt{ \sum_{i=0}^{n.blg} w_{blg-i} ((\mu_{ln(S_a), blg-i}-\mu_{ln(S_a), tot})^2+ \beta_{S_a, blg-i}^2})
+\label{eq:combination-lognormals-sigma}
+\end{equation}
+
+The mean $\mu_{ln(S_a)}$ and total dispersion $\beta_{S_a}$ of the fragility function of the class are converted to logarithmic mean $\mu_{S_a}$ and logarithmic covariance $cov_{S_a}$ (standard deviation $\sigma_{S_a}$ over $\mu_{S_a}$), according to the following equations:
+
+\begin{equation}
+\hat{S}_a = e^{\mu_{ln(S_a)}}
+\end{equation}
+\begin{equation}
+\mu_{S_a} = \hat{S}_a e^{\frac{\beta_{S_a}^2}{2}}
+\label{eq:median-to-mean}
+\end{equation}
+\begin{equation}
+\sigma_{S_a} = \sqrt[2]{(\beta_{S_a}^2-1) e^{2\ln{ \hat{S}_a}+\beta_{S_a}^2}}
+\label{eq:dispersion-to-standard}
+\end{equation}
+\begin{equation}
+cov_{S_a} = \frac{\sigma_{S_a}}{\mu_{S_a} }
+\end{equation}
+
+A single vulnerability function can be also obtained, from the single building vulnerability functions. The input damage-to-loss function is applied to the fragility function derived for each building. For the selected intensity measure levels a value of loss ratio $LR_{blg}$ is thus defined for each building. A discrete vulnerability function for the entire class of buildings is represented at each iml by a mean LR, $\mu_{LR,tot}$, equal tot the weighted $LR_{blg}$, and a standard deviation, $\sigma_{LR, tot}$, equal to the weighted standard deviation of all the computed $LR_{blg}$. The $\sigma_{LR, tot}$ of the fragility function of the class is converted to covariance $cov_{LR}$ (standard deviation $\sigma_{LR, tot}$ over $\mu_{LR, tot}$).
+
+\subsubsection{Inputs}
+\label{subsubsec:InputCr}
+The inputs must be formatted as comma-separated value files (.csv), and saved in the folder \textit{input}, contained in the NSP directory. If any other environment different from Windows is used make sure that the "comma separated values Windows" is selected as saving option when creating the input files. 
+
+If multiple buildings want to be analysed to consider the inter-building uncertainty the parameters relative to each building should be added as additional lines in the input tables, as shown in the examples below, otherwise a single line must be input.
+
+If the user has already at disposal an idealised elasto-plastic pushover curve for each building, that is to say that the variable \textit{in\_type} has been set to 0, the following data need to be provided in the corresponding csv files:
+
+\begin{enumerate}
+\item First period of vibration T$_1$, corresponding modal participation factor $\Gamma_1$, normalised with respect to the roof displacement, and weight for the combination of different buildings, input in \textit{building\_parameters.csv}, as in the example below:
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|} \hline
+	\textbf{n.building} & \textbf{T$_1$} & \textbf{$\Gamma_1$} & \textbf{weights}\\ \hline
+	1 & 0.32 & 1.23 & 0.2\\ \hline
+	2 & 0.40 & 1.25 & 0.3\\ \hline
+	... & ... & ... & ... \\ \hline
+	\end{tabular}
+	\end{table}
+	
+\item Roof displacement at each limit state LS and corresponding dispersion $\beta_{\theta c}$ input in \textit{displacement\_profile.csv}, as shown in the example below. If dispersion is unknown, $\beta_{\theta c}$ can be set equal to zero at each LS.
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|} \hline
+	\textbf{n.building} & \textbf{LS$_1$} &	\textbf{LS$_2$} &	\textbf{LS$_3$} \\ \hline
+	1 & 0.066 & 0.169 & 0.23\\ \hline
+	$\beta_{\theta d, 1}$ & 0.1 & 0.3 & 0.4\\ \hline
+	2 & 0.08 & 0.172 & 0.25\\ \hline
+	$\beta_{\theta d, 2}$ & 0.1 & 0.3 & 0.4\\ \hline	
+	\end{tabular}
+	\end{table}
+	
+\item Idealised pushover curve, input in \textit{idealised\_curve.csv} as shown below. The only required parameters are the yielding displacement $\delta_y$, the ultimate displacement $\delta_u$ and the yielding force F$_y$.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|} \hline
+\textbf{n.building} & \textbf{d$_y$} & \textbf{d$_u$} & \textbf{F$_y$} \\ \hline
+1 & 0.09	& 0.3	 & 523\\ \hline
+2 & 0.12	& 0.35	 & 400\\ \hline
+... & ...	& ... & ...\\ \hline
+\end{tabular}
+\end{table}
+
+\item Consequence model (loss ratio per each damage state) consistent with the defined set of damage states, input in \textit{consequence.csv}, as in the example below. A single consequence model can be input. This input is needed only if the variable \textit{vulnerability} has been set to 1.	
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|} \hline
+	\textbf{DS$_1$} & \textbf{DS$_2$} & \textbf{DS$_3$} \\ \hline
+	0.2	& 0.5	 & 1\\ \hline
+	\end{tabular}
+	\end{table}
+	
+\end{enumerate}
+
+If the idealised curve are not available, \textit{in\_type} = 0 can be selected and the displacements vs base shear at each time step results from a pushover analysis can be input instead. The following data need to be provided in the corresponding csv files:
+
+\begin{enumerate}
+\item T$_1$ and corresponding $\Gamma_1$, weight for the combination of different buildings, number of storeys and height of each storey, input in \textit{building\_parameters.csv}, as in the example below:
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
+	\textbf{n.building} & \textbf{T$_1$} & \textbf{$\Gamma_1$} & \textbf{weights} & \textbf{n.Storey} & \textbf{H$_1$} & \textbf{H$_2$} & ... & \textbf{H$_n$} \\ \hline
+	1 & 0.32 & 1.23 & 0.2 & 4 & 3 & 3 & ... & 3 \\ \hline
+	2 & 0.40 & 1.25 & 0.3 & 4 & 4 & 2.7 & ... & 2.7 \\ \hline
+	... & ... & ... & ... & ... & ... & ... & ... & ... \\ \hline
+	\end{tabular}
+	\end{table}
+	
+\item Displacements at each storey, at each incremental step of the pushover analysis, input in \textit{displacements\_pushover.csv}, as in the example below: 
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|} \hline
+	\textbf{n.building} & \textbf{n.Storey} & \textbf{Step1} & \textbf{Step 2} & \textbf{Storey 3} & ... & \textbf{Step n}\\ \hline
+	1 &	1 & 0.0001 &	0.0005 &	0.001 & ... & 0.01\\ \hline
+	   &	2 & 0.0003 &	0.0010 &	0.002 & ... & 0.02\\ \hline
+	   &	3 & 0.0004 &	0.0016 &	0.003 & ... & 0.03\\ \hline
+	   &	4 & 0.0006 &	0.0021 &	0.004 & ... & 0.04\\ \hline
+	2 &	1 & 0.0001 &	0.0005 &	0.001 & ... & 0.01\\ \hline
+	   &	2 & 0.0005 &	0.0012 &	0.002 & ... & 0.03\\ \hline
+	   &	... & ... &	... &	... & ... & ...\\ \hline
+	\end{tabular}
+	\end{table}
+	
+\item Base shear at each incremental step of the pushover analysis input in \textit{reactions\_pushover.csv}, as in the example below:
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|} \hline
+	\textbf{n.building} &	\textbf{Step1} & \textbf{Step 2} & \textbf{Storey 3} & ... & \textbf{Step n} \\ \hline
+	1 & 0.35 & 0.69 & 1.04 & ... & 29.12\\ \hline
+	2 & 0.45 & 0.78 & 2.05 & ... & 40.00\\ \hline
+	... & ... & ... & ... & ... & ...\\ \hline
+	\end{tabular}
+	\end{table}
+	
+\item Drift limit state and corresponding dispersion $\beta_{\theta c}$ input in \textit{limits.csv}. If dispersion is unknown, $\beta_{\theta c}$ can be set equal to zero at each limit state.
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|} \hline
+	\textbf{n.building} & \textbf{LS$_1$} &	\textbf{LS$_2$} &	\textbf{LS$_3$} \\ \hline
+	1 & 0.01 &	0.025 & 0.0337\\ \hline
+	$\beta_{\theta d, 1}$ &	0.1 & 0.2 & 0.25\\ \hline
+	2 & 0.014 &	0.030 & 0.0430\\ \hline
+	$\beta_{\theta d, 2}$ &	0.1 & 0.2 & 0.25\\ \hline
+	\end{tabular}
+	\end{table}
+
+\item Consequence model (loss ratio per each damage state) consistent with the defined set of damage states, input in \textit{consequence.csv}, as in the example below. A single consequence model can be input. This input is needed only if the variable \textit{vulnerability} has been set to 1.
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|} \hline
+	\textbf{DS$_1$} & \textbf{DS$_2$} & \textbf{DS$_3$} \\ \hline
+	0.2	& 0.5	 & 1\\ \hline
+	\end{tabular}
+	\end{table}
+	
+\end{enumerate}
+
+\subsubsection{Calculation Steps}
+The overall workflow of C$_R$-based procedure is summarised in this section. The option \textit{an\_type} must be set equal to 0 and the option \textit{in\_type} according to the input at disposal. The corresponding inputs should follow the requirements described in section \ref{subsec:InputCr}. At this point the code proceeds with the following steps:
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item If \textit{in\_type} = 0 roof displacement at limit states and idealised pushover are extracted from \textit{displacement\_profile.csv} and \textit{idealised\_curve.csv} respectively.
+\item If \textit{in\_type} = 1 results from pushover analysis are extracted from \textit{displacements\_pushover.csv} and \textit{reactions\_pushover.csv}, and drift limit states from \textit{limits.csv}. The idealised 	pushover curve is then derived in the \textit{idealisation} function, where the idealisation process is conducted according to FEMA-440. The elastic stiffness is defined as the 	tangent stiffness passing through the point of the pushover curve where 60\% of the maximum base shear is reached, and the perfectly plastic branch is set at an height equal to 	the maximum base shear. The yielding point is found as the interception between the elastic and the plastic branch.
+\end{enumerate}
+
+\item The csv input files are parsed with the function \textit{read\_data} according to the defined options. The parameters essential to the analysis are return together with a graphical visualisation of the inputs if the variable \textit{plotflag}[0] is equal to 1.
+
+\item The parameters extracted are used in the \textit{simplified\_bilinear} function, within the \textit{fragility\_process} function, to derive ductility levels $\mu_{ds}$, median spectral acceleration $\hat{S}_{a,ds}$ and the total dispersion $\beta_{S_a}$ at each limit state through the following steps:
+\begin{itemize}
+\item The idealised MDoF system is transformed into an equivalent SDoF system, using $\Gamma_1$.
+\item Ductility levels $\mu_{ds}$ corresponding to each damage threshold, are defined.
+\item R and C$_R$ are computed, using eq. \ref{eq:R_RGM} and \ref{eq:Cr_RGM} respectively.
+\item $\hat{S}_{a,ds}$ and the corresponding dispersion  $\beta_{\theta d}$ are computed using eq. \ref{eq:Sa_RGM} and \ref{eq:betaSa_RGM} respectively.
+\item $\beta_{\theta d}$ is combined with dispersion due to uncertainty in the model $\beta_{\theta c}$, if different from zero, to get the total dispersion $\beta_{S_a}$, using eq. \ref{eq:betaSc_RGM}.
+\item $\hat{S}_a(T_1)$ is converted to mean $\mu_{ln(S_a)}(T_1)$ and then to the intensity measure in common with the rest of the buildings, $\mu_{ln(S_a(T_{av}))}$, according to eq. \ref{eq:Sa(Tav)}
+\end{itemize}
+
+\item Step 3. is repeated for the number of input buildings.
+
+\item
+\begin{enumerate}
+\item If vulnerability = 0: All $\mu_{ln(S_a), blg}$ and $\beta_{S_a, blg}$ are combined in a single lognormal curve, whose parameters are evaluated according to equations \ref{eq:combination-lognormals-mu} and \ref{eq:combination-lognormals-sigma}. Mean $\mu_{ln(S_{a})}$ and total dispersion $\beta_{S_a}$ are then converted to logarithmic mean $\mu_{S_a}$ and logarithmic covariance $cov_{S_a}$, according to equations \ref{eq:median-to-mean} and \ref{eq:dispersion-to-standard} respectively. Fragility curves for the class of buildings are displayed if the variable \textit{plotflag}[2] = 1, and logarithmic $\mu_{S_a}$ and $cov_{S_a}$ are exported in the \textit{outputs} folder.
+
+\item If vulnerability =1: Vulnerability curves are derived for each fragility function derived at step 4. For the intensity measure levels defined in the variable \textit{iml} a value of loss ratio is thus defined for each building. They are finally combined in a single mean and its standard deviation, equal to the weighted mean and the weighted standard deviation of the loss ratios, as described in section \ref{subsec:InputCr}. Vulnerability curve for the class of buildings is displayed if the variable \textit{plotflag}[3] = 1. The $\sigma_{LR, tot}$ of the fragility function of the class is converted to covariance $cov_{LR}$ and $\mu_{LR}$ and $cov_{LR}$ at each iml are exported in the \textit{outputs} folder.
+\end{enumerate}
+\end{enumerate}
