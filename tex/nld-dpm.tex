@@ -15,12 +15,14 @@ in\_type = 0 # damage count matrix
 in\_type = 1# IMLs and EDPs 
 \end{Verbatim}
 
-The variable \textit{vulnerability} instead gives the opportunity to decide the type of outputs, whether to stop the process at the derivation of the fragility curves, or to go all the way up to the vulnerability curve definition, applying damage-to-loss functions.
+The variable \textit{vuln} instead gives the opportunity to decide the type of outputs, whether to stop the process at the derivation of the fragility curves, or to go all the way up to the vulnerability curve definition, applying damage-to-loss functions.
 
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
-vulnerability = 0 # derive fragility curves 
-vulnerability = 1 # derive vulnerability curve
+vuln = 0 # derive fragility curves 
+vuln = 1 # derive vulnerability curve
 \end{Verbatim}
+
+The variable g has to be set to the value of the gravity acceleration, expressed consistently with the units used for the intensity measure input data. For example if the intensity measure used is PGA expressed in g, the variable g will be set to 1, if PGA is expressed in m/s$^2$ instead g will be set to 9.81.
 
 The variable \textit{iml} is a numpy array that identifies the intensity measure levels for which loss ratios are computed and provided in the vulnerability curve.
 
@@ -48,7 +50,7 @@ The inputs must be formatted as comma-separated value files (.csv), and saved in
 
 Two types of input can be entered, whether the results of the set of dynamic analyses performed have already been organised in a damage probability matrix for or not. In the former case the variable \textit{in\_type} should be set to 0 and the damage count matrix should be input in the csv file \textit{dcm.csv}. The first two columns refer to the number of record and the corresponding intensity measure level, the following columns report the number of buildings in each damage state, as shown in the following table:
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \begin{tabular}{|c|c|c|c|c|} \hline
 \textbf{n.records} & \textbf{Intensity Measure Level} & \textbf{DS$_0$} & \textbf{DS$_1$} & \textbf{DS$_2$} \\ \hline
@@ -63,7 +65,7 @@ Two types of input can be entered, whether the results of the set of dynamic ana
 
 In the latter case the variable \textit{in\_type} should be set to 1, and the results of the set of dynamic analyses should be entered in the \textit{edp.csv} file in the following fashion: number of record, corresponding IML, and corresponding EDPs for each building subjected to that record.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|} \hline
 \textbf{n.records} & \textbf{IML} & \textbf{edp$_{blg,1}$} & \textbf{edp$_{blg,2}$} & \textbf{...} & \textbf{edp$_{blg,n}$} \\ \hline
@@ -79,7 +81,7 @@ n &	34.484 &	0.00036 & 	0.00136 & ... & 	0.00236\\ \hline
 
 In this case also the limit states must be input in the \textit{limits.csv} file. Each line of the file corresponds to the limit states of a building, but if all the buildings share the same limits a single line can be input.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \begin{tabular}{|c|c|c|c|c|} \hline
 \textbf{n.building} & \textbf{LS$_1$} & \textbf{LS$_2$} & \textbf{LS$_3$} & \textbf{LS$_4$} \\ \hline
@@ -92,22 +94,22 @@ n & 0.0024 &	0.016 &	0.025 &	0.03\\ \hline
 \end{table}
 
 \subsubsection{Calculations}
-The overall workflow of the DPM-based procedure is summarised in this section. The option \textit{in\_type} should be set according to the input at disposal. The corresponding inputs should follow the requirements described in section \ref{subsubsec:inputs}. At this point the code proceeds with the following steps:
+The overall workflow of the DPM-based procedure is summarised in this section. The option \textit{in\_type} should be set according to the input at disposal. The corresponding inputs should follow the requirements described in the previous section. At this point the code proceeds with the following steps:
 
 \begin{enumerate}
 \item In the function \textit{read\_data} the inputs are read and the damage count matrix is returned.
 \begin{enumerate}
 \item If \textit{in\_type} = 0, the damage count matrix is extracted directly from the \textit{dcm.csv} file.
 
-\item If \textit{in\_type} = 1 the IMLs of the records used in the dynamic analyses and the corresponding EDPs are extracted from \textit{edp.csv} and the limit states for each building, expressed in terms of the same EDP, are extracted from \textit{limits.csv}.	 These data are converted into a damage count matrix according to the method described in section~\ref{subsec:NDMtheory}.
+\item If \textit{in\_type} = 1 the IMLs of the records used in the dynamic analyses and the corresponding EDPs are extracted from \textit{edp.csv} and the limit states for each building, expressed in terms of the same EDP, are extracted from \textit{limits.csv}.	 These data are converted into a damage count matrix according to the method described in section \ref{subsec:nld-dpm}.
 \end{enumerate}
 
-\item The parameters extracted are used to derive the Probability of Exceedance (PoE) of each limit state for each IML, as described in section~\ref{subsec:NDMtheory}.
+\item The parameters extracted are used to derive the Probability of Exceedance (PoE) of each limit state for each IML, as described in section \ref{subsec:nld-dpm}.
 
 \item The PoEs are fitted with a lognormal function using the maximum likelihood method. The mean $\mu_{ln IML}$ and standard deviation $\sigma_{ln IML}$ of the corresponding normal distribution for the entire class of buildings are found for each limit state.
 
 \item The $\mu_{ln IML}$ and $\sigma_{ln IML}$ are converted to logarithmic $\mu_{IML}$ and $\sigma_{IML}$. The fragility curves for the class of buildings are displayed if the variable \textit{plotflag}[0] = 1, and the logarithmic $\mu_{IML}$ and $\sigma_{IML}$ are exported in the \textit{outputs} folder.
 
-\item If vulnerability =1:  For the intensity measure levels defined in the variable \textit{iml} a value of loss ratio is defined, according to section \ref{subsec:NDMtheory}. A vulnerability curve for the class of buildings is displayed if the variable~\textit{plotflag}[1] = 1, and the loss ratios at each iml are exported in the \textit{outputs} folder.
+\item If \textit{vuln} =1:  For the intensity measure levels defined in the variable \textit{iml} a value of loss ratio is defined, according to section \ref{subsec:nld-dpm}. A vulnerability curve for the class of buildings is displayed if the variable~\textit{plotflag}[1] = 1, and the loss ratios at each iml are exported in the \textit{outputs} folder.
 
 \end{enumerate}

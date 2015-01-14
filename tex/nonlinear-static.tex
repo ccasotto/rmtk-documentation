@@ -125,7 +125,7 @@ If the user has already at disposal an idealised elasto-plastic pushover curve f
 
 \begin{enumerate}
 \item First period of vibration T$_1$, corresponding modal participation factor $\Gamma_1$, normalised with respect to the roof displacement, and weight for the combination of different buildings, input in \textit{building\_parameters.csv}, as in the example below:
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|} \hline
 	\textbf{n.building} & \textbf{T$_1$} & \textbf{$\Gamma_1$} & \textbf{weights}\\ \hline
@@ -136,7 +136,7 @@ If the user has already at disposal an idealised elasto-plastic pushover curve f
 	\end{table}
 	
 \item Roof displacement at each limit state LS and corresponding dispersion $\beta_{\theta c}$ input in \textit{displacement\_profile.csv}, as shown in the example below. If dispersion is unknown, $\beta_{\theta c}$ can be set equal to zero at each LS.
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|} \hline
 	\textbf{n.building} & \textbf{LS$_1$} &	\textbf{LS$_2$} &	\textbf{LS$_3$} \\ \hline
@@ -149,7 +149,7 @@ If the user has already at disposal an idealised elasto-plastic pushover curve f
 	
 \item Idealised pushover curve, input in \textit{idealised\_curve.csv} as shown below. The only required parameters are the yielding displacement $\delta_y$, the ultimate displacement $\delta_u$ and the yielding force F$_y$.
 
-\begin{table}[H]
+\begin{table}[h]
 \centering
 \begin{tabular}{|c|c|c|c|} \hline
 \textbf{n.building} & \textbf{d$_y$} & \textbf{d$_u$} & \textbf{F$_y$} \\ \hline
@@ -160,7 +160,7 @@ If the user has already at disposal an idealised elasto-plastic pushover curve f
 \end{table}
 
 \item Consequence model (loss ratio per each damage state) consistent with the defined set of damage states, input in \textit{consequence.csv}, as in the example below. A single consequence model can be input. This input is needed only if the variable \textit{vulnerability} has been set to 1.	
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|} \hline
 	\textbf{DS$_1$} & \textbf{DS$_2$} & \textbf{DS$_3$} \\ \hline
@@ -174,7 +174,7 @@ If the idealised curve are not available, \textit{in\_type} = 0 can be selected 
 
 \begin{enumerate}
 \item T$_1$ and corresponding $\Gamma_1$, weight for the combination of different buildings, number of storeys and height of each storey, input in \textit{building\_parameters.csv}, as in the example below:
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
 	\textbf{n.building} & \textbf{T$_1$} & \textbf{$\Gamma_1$} & \textbf{weights} & \textbf{n.Storey} & \textbf{H$_1$} & \textbf{H$_2$} & ... & \textbf{H$_n$} \\ \hline
@@ -185,7 +185,7 @@ If the idealised curve are not available, \textit{in\_type} = 0 can be selected 
 	\end{table}
 	
 \item Displacements at each storey, at each incremental step of the pushover analysis, input in \textit{displacements\_pushover.csv}, as in the example below: 
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|c|c|} \hline
 	\textbf{n.building} & \textbf{n.Storey} & \textbf{Step1} & \textbf{Step 2} & \textbf{Storey 3} & ... & \textbf{Step n}\\ \hline
@@ -200,7 +200,7 @@ If the idealised curve are not available, \textit{in\_type} = 0 can be selected 
 	\end{table}
 	
 \item Base shear at each incremental step of the pushover analysis input in \textit{reactions\_pushover.csv}, as in the example below:
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|c|} \hline
 	\textbf{n.building} &	\textbf{Step1} & \textbf{Step 2} & \textbf{Storey 3} & ... & \textbf{Step n} \\ \hline
@@ -211,7 +211,7 @@ If the idealised curve are not available, \textit{in\_type} = 0 can be selected 
 	\end{table}
 	
 \item Drift limit state and corresponding dispersion $\beta_{\theta c}$ input in \textit{limits.csv}. If dispersion is unknown, $\beta_{\theta c}$ can be set equal to zero at each limit state.
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|} \hline
 	\textbf{n.building} & \textbf{LS$_1$} &	\textbf{LS$_2$} &	\textbf{LS$_3$} \\ \hline
@@ -223,7 +223,7 @@ If the idealised curve are not available, \textit{in\_type} = 0 can be selected 
 	\end{table}
 
 \item Consequence model (loss ratio per each damage state) consistent with the defined set of damage states, input in \textit{consequence.csv}, as in the example below. A single consequence model can be input. This input is needed only if the variable \textit{vulnerability} has been set to 1.
-	\begin{table}[H]
+	\begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|} \hline
 	\textbf{DS$_1$} & \textbf{DS$_2$} & \textbf{DS$_3$} \\ \hline
@@ -270,7 +270,7 @@ The overall workflow of C$_R$-based procedure is summarised in this section. The
 \subsection{Theoretical background}
 The aim of this procedure is the estimation of the median spectral acceleration value $\hat{S}_{a,ds}$, that brings the structure to the attainment of a set of damage states ds, and the corresponding dispersion beta $\beta_{S_a}$, the parameters needed for the mathematical representation of fragility in equation \ref{eq:fragility-definition}. The aim is achieved making use of the tool spo2ida (Vamvatsikos and Cornell, 2006), where static pushover curves are converted into 16\%, 50\% and 84\% IDA curves, using empirical relationships from a large database of incremental dynamic analysis results, as shown in Figure~\ref{fig:spo2ida}.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=12cm,height=8cm]{./figures/spo2ida.jpg}
 \caption{spo2ida tool: IDA curves derived from Pushover curve.}
@@ -332,14 +332,14 @@ If the user has already at disposal an idealised multilinear pushover curve for 
 	
 \item Idealised pushover curve, input in \textit{idealised\_curve.csv} as shown below. The parameters needed to describe the idealised pushover curve are: yielding displacement d$_y$, displacement at the onset of degradation d$_s$, displacement at the onset of residual force d$_{min}$, ultimate displacement d$_u$, maximum force F$_{max}$, residual force F$_{min}$. These parameters are represented in Figure~\ref{fig:quadrilinear}.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=12cm,height=8cm]{./figures/quadrilinear.jpg}
 \caption{Idealisation of capacity curve using multilinear elasto-plastic form.}
 \label{fig:quadrilinear}
 \end{figure}
 
-\begin{table}[H]
+\begin{table}[h]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|} \hline
 \textbf{n.building} & \textbf{d$_y$} & \textbf{d$_s$} & \textbf{d$_{min}$} & \textbf{d$_u$} & \textbf{F$_{max}$} & \textbf{F$_{min}$} \\ \hline
@@ -426,7 +426,7 @@ In the proposed model, $\mu$ is linearly dependent on R within two reduction fac
 
 Given the parameters of the multilinear pushover curves (R$_{\mu_{c}}$, $\mu_{c}$, r$_{u}$) and T, the median R-$\mu$ curve, similar to an IDA curve, can be construct using the aforementioned relationship.  A multilinear capacity curve and the corresponding R$_{\mu_{c}}$, $\mu_{c}$ and r$_{u}$ parameters are shown in Figure \ref{fig:quadrilinear_DF}.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=10cm,height=5cm]{./figures/quadrilinearDF.jpg}
 \caption{Multilinear capacity curve and parameters for the definition of R-$\mu$ relation.}
