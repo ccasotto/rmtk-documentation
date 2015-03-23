@@ -11,25 +11,24 @@ The spo2ida-based procedure presented herein is applicable to any kind of multi-
 
 \subsubsection{Single-building Fragility and Vulnerability function}
 \label{subsubsec:single-building-spo2ida}
-Given the idealised capacity curve the spo2ida tool uses an implicit R-$\mu$-T relation to correlate nonlinear displacement, expressed in terms of ductility $\mu$ to the corresponding medians capacity in terms of the parameters R. R is the lateral strength ratio, defined as the ratio between the spectral spectral acceleration S$_a$ and the yielding capacity of the system S$_{ay}$. 
+Given the idealised capacity curve the spo2ida tool uses an implicit R-$\mu$-T relation to correlate nonlinear displacement, expressed in terms of ductility $\mu$ to the corresponding medians capacity in terms of the parameters R. R is the lateral strength ratio, defined as the ratio between the spectral acceleration S$_a$ and the yielding capacity of the system S$_{ay}$. \\
 
 Each branch of the capacity curve, hardening, softening and residual plateau, is converted to a corresponding branch of the three ida curves, using the R-$\mu$-T relation, which is a function of the hardening stiffness, the softening stiffness and the residual force. These parameters are derived from the idealised pushover capacity expressed in $\mu$-R terms, as well as the ductility levels at the onset of each branch. If some of the branches of the pushover curve are missing because of the seismic behaviour of the system, spo2ida can equally work with bilinear, trilinear and quadrilinear idealisations.
 
-The result of the spo2ida routine is thus a list of ductility levels and corresponding R values at 50\%, 16\% and 84\% percentiles. The distribution of R values at each ductility level, due to the record-to-record variability, is assumed to be lognormal and it can be easily converted to the dispersion of the lognormal distribution with the eq. \ref{eq:betaR}. \\
-$\beta_{R(\mu)}$ represents also the record-to-record variability of S$_a$ at different ductility levels $\beta_{S_a, d}$. Median R and its dispersion at ductility levels corresponding to the damage thresholds can thus be determined, and $\hat{S}_{a,ds}$ can be easily extracted simply multiplying $\hat{R}(\mu_{ds})$ by the yielding capacity of the system $S_{ay}$, as shown in eq. \ref{eq:SaR} and eq. \ref{eq:Say}. Since $\hat{R}$ and $\hat{S}_{a}$ are proportional they share the same dispersion.\\
+The result of the spo2ida routine is thus a list of ductility levels and corresponding R values at 50\%, 16\% and 84\% percentiles. The distribution of R values at each ductility level, due to the record-to-record variability, is assumed to be lognormal and it can be easily converted to the dispersion of the lognormal distribution with the eq. \ref{eq:betaR}. 
+Median R and its dispersion at ductility levels corresponding to the damage thresholds can thus be determined, and $\hat{S}_{a,ds}$ can be easily extracted simply multiplying $\hat{R}(\mu_{ds})$ by the yielding capacity of the system $S_{ay}$, as shown in eq. \ref{eq:SaR} and eq. \ref{eq:Say}. Since $\hat{R}$ and $\hat{S}_{a}$ are proportional they share the same dispersion.\\
 
-If dispersion due to uncertainty in the limit state definition $\beta_{\theta c}$ is different from zero it can not be combined directly with the record-to-record dispersion, but a Monte Carlo sampling of the limit state needs to be performed instead. Different values of ductility limit state are sampled from the  lognormal distribution with median the median value of the ductility limit state, and dispersion the input $\beta_{\theta c}$. For each of these ductilities the corresponding median $\hat{R}$ and R$_{16\%}$, R$_{84\%}$ are found and converted into $\hat{S}_{a,ds}$ and $\beta_{\theta d}$ according to equation \ref{eq:SaR} and \ref{eq:betaR}. N random S$_a$ for each the N sampled ductility limit states are computed, and their median and the dispersion are estimated. These parameters constitute the median $\hat{S}_{a,ds}$ and the total dispersion $\beta_{S_a}$ for the considered damage state. The procedure is repeated for each damage state.\\
+If dispersion due to uncertainty in the limit state definition $\beta_{\theta c}$ is different from zero it can not be combined directly with the record-to-record dispersion, but a Monte Carlo sampling of the limit state needs to be performed instead. Different values of ductility limit state are sampled from the  lognormal distribution with median the median value of the ductility limit state, and dispersion the input $\beta_{\theta c}$. For each of these ductilities the corresponding median $R_{50\%}$ and R$_{16\%}$, R$_{84\%}$ are found and converted into $\hat{S}_{a,ds}$ and $\beta_{\theta d}$ according to equation \ref{eq:SaR} and \ref{eq:betaR}. MC random S$_a$ for each MC sampled ductility limit state are computed, and their median and the dispersion are estimated. These parameters constitute the median $\hat{S}_{a,ds}$ and the total dispersion $\beta_{S_a}$ for the considered damage state. The procedure is repeated for each damage state.\\
 
 To derive a discrete vulnerability function at certain intensity measure levels, the input damage-to-loss factors are applied to the probability of occurance of each damage state, extracted from the probability of exceedance of each damage state described by the set of fragility curves. 
 
-If dispersion due to uncertainty in the limit state is different from zero a vulnerability function is derived for the N sets of sampled ductility limit states. It results in N loss ratios for each defined intensity measure levels. Finally a lognormal distribution of the loss ratios is assumed at each iml and the vulnerability curve is defined at each iml by the mean and the standard deviation of all the computed loss ratios.
+If dispersion due to uncertainty in the limit state is different from zero a vulnerability function is derived for the MC sets of sampled ductility limit states. It results in MC loss ratios for each defined intensity measure levels. Finally a lognormal distribution of the loss ratios is assumed at each iml and the vulnerability curve is defined at each iml by the mean and the standard deviation of all the computed loss ratios.
 
 \subsubsection{Multiple-Building Fragility and Vulnerability function}
 \label{subsubsec:multiple-building-spo2ida}
-If multiple buildings have been input to derive a set of fragility curves for a class of buildings all $\hat{S}_{a,blg}$ and $\beta_{S_a,blg}$ are combined in a single lognormal curve for each damage state. A minimum of 5 buildings should be considered to obtain reliable results for the class. The procedure to get $\mu_{S_a,tot}$ and $cov_{S_a,tot}$ for the class of building is the same described in section \ref{subsubsec:multiple-buildings}, but the $\hat{S}_{a,blg}$ and $\beta_{S_a,blg}$ are those derived from each sampled set of ductility limit state.
+If multiple buildings have been input to derive a set of fragility curves for a class of buildings all $\hat{S}_{a,blg}$ and $\beta_{S_a,blg}$ are combined in a single lognormal curve for each damage state. A minimum of 5 buildings should be considered to obtain reliable results for the class. The procedure to get $\mu_{S_a,tot}$ and $cov_{S_a,tot}$ for the class of building is the same described in section \ref{subsubsec:multiple-buildings}.
 
-A single vulnerability curve can also be obtained, from the single building vulnerability curves. If no dispersion in the limit state is defined, the method is the same described in section \ref{subsubsec:multiple-buildings}. Otherwise a vulnerability curve is derived for each building as explained in section \ref{subsub:single-building-spo2ida}, considering the sampled set of ductility limit states, that is to say that the mean loss ratio and its standard deviation at each iml, $\mu_{LR,iml,blg}$ and $\sigma_{LR,iml,blg}$ respectively, are found for each building.
-Finally the mean loss ratio and its standard deviation, $\mu_{LR,iml}$ and $\sigma_{LR,iml}$, are found for the entire class of buildings as the weighted mean of the single $\mu_{LR,iml,blg}$ and the weighted SRSS of the inter-building and intra-building standard deviation, the standard deviation of the single means $\mu_{LR,iml,blg}$ and the single dispersions $\sigma_{LR,iml,blg}$ respectively, as described in eq \ref{eq:combination-lognormals-sigma}, substituting loss ratio to spectral acceleration.
+A single vulnerability curve can also be obtained, from the single building vulnerability curves. The method is the same described in section \ref{subsubsec:multiple-buildings}.
 
 \subsubsection{Inputs}
 \label{subsubsec:InputSpo2ida}
@@ -69,41 +68,82 @@ If the user has already at disposal an idealised multilinear pushover curve for 
 If these data are not available, \textit{in\_type} = 0 can be selected and the "raw" results from a pushover analysis can be input instead. The same data as in section \ref{subsubsec:InputCr} for \textit{in\_type} = 0 can be input.
 
 \subsubsection{Calculation Steps}
-The overall workflow of spo2ida-based procedure is summarised in this section. The option \textit{an\_type} must be set equal to 1 and the option \textit{in\_type} according to the input at disposal. The corresponding inputs should follow the requirements described in section \ref{subsubsec:InputSpo2ida}. At this point the code proceeds with the following steps:
+The overall workflow of spo2ida-based procedure is summarised in this section and represented in Figure \ref{fig:SPO_workflow} for the case of a single building fragility/vulnerability function. 
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=15cm]{./figures/spo-WorkFlow.jpg}
+\caption{SPO2IDA-based procedure workflow.}
+\label{fig:SPO_workflow}
+\end{figure}
+
+The option \textit{an\_type} must be set equal to 1 and the option \textit{in\_type} according to the input at disposal. The corresponding inputs should follow the requirements described in section \ref{subsubsec:InputSpo2ida}. At this point the code proceeds with the following steps:\\
 
 \begin{enumerate}
-\item 
+\item \textbf{Process Inputs within \textit{read\_data}  function}\\
 \begin{enumerate}
 \item If \textit{in\_type} = 0, the roof displacement at each limit state and the idealised pushover curve parameters are extracted from \textit{displacement\_profile.csv} and \textit{idealised\_curve.csv} respectively.
 
-\item If \textit{in\_type} = 1 the results from a pushover analysis are extracted from \textit{displacements\_pushover.csv} and \textit{reactions\_pushover.csv} and drift limit states from {limits.csv}. The idealised pushover curve is then derived in the \textit{idealisation} function, where the idealisation process is conducted according to the Gem Analytical Vulnerability Guidelines.	\end{enumerate}
+\item If \textit{in\_type} = 1 the results from a pushover analysis are extracted from \textit{displacements\_pushover.csv} and \textit{reactions\_pushover.csv} and drift limit states from {limits.csv}. The idealised pushover curve is then derived in the \textit{idealisation} function, where the idealisation process is conducted according to the Gem Analytical Vulnerability Guidelines.\\	\end{enumerate}
 
-\item The parameters extracted are used to derive ductility levels $\mu_{ds}$, median spectral acceleration $\hat{S}_{a,ds}$ and the total dispersion $\beta_{S_a}$ at each damage threshold through the following steps:
-\begin{itemize}
+Period, modal participation factor, number of buildings constituting the building class, importance factor (weight) of the each building within the class, average period of the class and the ratio $S_a(T_{av})/S_a(T_{blg})$ are also returned by the function \textit{read\_data} .\\
+
+\item \textbf{Fragility curve methodology}\\
+The parameters extracted are used in the \textit{simplified\_bilinear} function, within the \textit{fragility\_process} function, to derive ductility levels $\mu_{ds}$, median spectral acceleration $\hat{S}_{a,ds}$ and the total dispersion $\beta_{S_a}$ at each limit state through the following steps:
+
+\begin{enumerate}
+
 \item The idealised MDoF system is transformed into an equivalent SDoF system, using $\Gamma_1$, and SDoF capacity curve is  expressed in terms of $\mu$-R.
+
+\item Ductility levels $\mu_{ds}$ corresponding to each damage threshold, are defined.
 
 \item The variables for spo2ida tool are extracted from the capacity curve and they are used as input to get the 16\%-50\%-84\% ida curves.
 
-\item The ductility levels $\mu_{ds}$ corresponding to each damage threshold are defined, and the corresponding R$_{16\%}$-R$_{50\%}$-R$_{84\%}$ are found in ida outputs.
+\item $R_{50\%}$ and C$_{R_{50\%}}$ are computed for the ductility limit states $\mu_{ds}$, interpolating the aforementioned curves.
 
-\item $\hat{S}_{a,ds}$ and the corresponding dispersion $\beta_{S_{a, d}}$ are computed using eq.~\ref{eq:SaR} and eq.~\ref{eq:betaR}, respectively.
+\item $\hat{S}_{a,ds}$ and the corresponding dispersion $\beta_{S_{a d}}$ due to record-to-record variability are computed using eq. \ref{eq:SaR} and \ref{eq:betaR} for each limit state.
 
-\item If dispersion due to uncertainty in the limit state $\beta_{\theta c}$ is different from zero different ductility limit states are sampled for each median ductility level $\mu_{ds}$ and corresponding values of $\hat{S}_{a,ds}$ and $\beta_{S_{a, d}}$ are computed, as described in section \ref{subsubsec:single-building-spo2ida}, but not yet combined together.
+\item If dispersion due to uncertainty in the limit state $\beta_{\theta c}$ is different from zero, different ductility limit states are sampled for each median ductility level $\mu_{ds}$. For each sampled ductilities the corresponding $\hat{S}_{a,ds}$ and $\beta_{S_{a ds}}$ are found as described in steps (d) and (e), and MC random S$_a$ for each of the MC sampled ductility limit states are computed using $\hat{S}_{a,ds}$ and $\beta_{S_{a d}}$.\\
 
-\end{itemize}
+\end{enumerate}
 
-\item All $\hat{S}_{a, ds}(T_1)$ are converted to mean $\mu_{ln(S_{a, ds})}(T_1)$ and then to the intensity measure in common with the rest of the buildings, $\mu_{ln(S_{a, ds}(T_{av}))}$, according to eq. \ref{eq:Sa(Tav)}.
-
-\item Step 2. and 3. are repeated for the number of input buildings.
-
-\item
+\item \textbf{Fragility curve results}\\
+If number of buildings = 1\\
 \begin{enumerate}
+\item If \textit{vuln} = 0
+the final values of median and dispersion of the fragility curves, $\hat{S}_{a,ds}$ and $\beta_{S_a}$, are computed as the mean and the standard deviation of the MC$^2$ samples of S$_a$, if many $\mu_{ds}$ were sampled at step 2.f, otherwise they correspond to the $\hat{S}_{a,ds}$ and $\beta_{S_{a d}}$, including only record-to-record variability, obtained at step 2.e.
 
-\item If \textit{vuln} = 0: All $\hat{S}_{a,ds}$ and $\beta_{S_{a, d}}$ from all the buildings and all the sampled ductility limit states are combined in a single lognormal curve, as described in section \ref{subsubsec:single-building-spo2ida}. 
+All $\hat{S}_{a, ds}$ are converted to mean $\mu_{ln(S_{a, ds})}$. Mean $\mu_{ln(S_{a})}$ and total dispersion $\beta_{S_a}$ are then converted to logarithmic mean $\mu_{S_a}$ and logarithmic covariance $cov_{S_a}$, according to equations \ref{eq:median-to-mean} and \ref{eq:dispersion-to-standard} respectively.
+
+Fragility curves for the building are displayed if the variable \textit{plotflag}[2] = 1, and logarithmic $\mu_{S_a}$ and $cov_{S_a}$ are exported in the \textit{outputs} folder.
+
+\item 
+If \textit{vuln} =1
+For each intensity measure level defined in the variable \textit{iml} MC values of loss ratio LRs are defined for the MC sets of $\mu_{ds}$, if many values were sampled to account for uncertainty in the damage criteria at step 2.f, using the \textit{damage\_to\_loss} function. Mean and standard deviation of LRs(iml), $\mu_{LR}$ and $\beta_{LR}$, are computed. If $\beta_{\theta c}$= 0 a single set of $\mu_{ds}$ is considered, resulting in no uncertainty in the LR for each iml.\\
+
+Vulnerability curve for the building is displayed if the variable \textit{plotflag}[3] = 1, and $\mu_{LR}$ and $cov_{LR}$ at each iml are exported in the \textit{outputs} folder.\\
+
+\end{enumerate}
+
+If number of buildings > 1\\
+\begin{enumerate}
+\item If \textit{vuln} = 0
+the final values of median and dispersion of the fragility curves, $\hat{S}_{a,ds}$ and $\beta_{S_a}$, are computed as the mean and the standard deviation of the MC$^2$ samples of S$_a$, if many $\mu_{ds}$ were sampled at step 2.f, otherwise they correspond to the $\hat{S}_{a,ds}$ and $\beta_{S_{a d}}$, including only record-to-record variability, obtained at step 2.e.
+
+All $\hat{S}_{a, ds, blg}(T_1)$ are converted to mean $\mu_{ln(S_{a, ds, blg})}(T_1)$ and then to the intensity measure in common with the rest of the buildings, $\mu_{ln(S_{a, ds, blg}(T_{av}))}$, according to eq. \ref{eq:Sa(Tav)}.\\
+The $\mu_{ln(S_{a, ds, blg}(T_{av}))}$ are finally combined in a single lognormal curve for the building class, as described in section \ref{subsubsec:multiple-buildings}. 
+
 Mean $\mu_{ln(S_{a})}$ and total dispersion $\beta_{S_a}$ are then converted to logarithmic mean $\mu_{S_a}$ and logarithmic covariance $cov_{S_a}$, according to equations \ref{eq:median-to-mean} and \ref{eq:dispersion-to-standard} respectively.
+
 Fragility curves for the class of buildings are displayed if the variable \textit{plotflag}[2] = 1, and logarithmic $\mu_{S_a}$ and $cov_{S_a}$ are exported in the \textit{outputs} folder.
-\item If \textit{vuln} =1:  
-For the intensity measure levels defined in the variable \textit{iml} a value of loss ratio $\mu_{LR, iml, blg}$ is defined for each building and a standard deviation $\sigma_{LR, iml, blg}$, if dispersion due to uncertainty in the limit state $\beta_{\theta c}$ is different from zero. They are finally combined in a single mean and standard deviationas described in section \ref{subsubsec:multiple-building-spo2ida}. Vulnerability curve for the class of buildings is displayed if the variable \textit{plotflag}[3] = 1, and $\mu_{LR}$ and $cov_{LR}$ at each iml are exported in the \textit{outputs} folder.
+
+\item If \textit{vuln} =1
+all $\hat{S}_{a, ds}(T_1)$ for each building are converted to mean $\mu_{ln(S_{a, ds})}(T_1)$ and then to the intensity measure in common with the rest of the buildings, $\mu_{ln(S_{a, ds, blg}(T_{av}))}$, according to eq. \ref{eq:Sa(Tav)}.
+
+For each intensity measure level defined in the variable \textit{iml} MC values of loss ratio LRs are defined for the MC sets of $\mu_{ds}$, if many values were sampled to account for uncertainty in the damage criteria at step 2.f, using the \textit{damage\_to\_loss} function. Mean and standard deviation of LRs(iml), $\mu_{LR}$ and $\beta_{LR}$, are computed. If $\beta_{\theta c}$= 0 a single set of $\mu_{ds}$ is considered, resulting in no uncertainty in the LR for each iml.\\
+
+The $\mu_{LR, iml, blg}$ are finally combined in a single mean and standard deviations, as described in section \ref{subsubsec:multiple-buildings}. Vulnerability curve for the class of buildings is displayed if the variable \textit{plotflag}[3] = 1, and $\mu_{LR}$ and $cov_{LR}$ at each iml are exported in the \textit{outputs} folder.
+
 \end{enumerate}
 
 \end{enumerate}
