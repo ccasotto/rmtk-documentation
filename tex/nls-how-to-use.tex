@@ -15,7 +15,7 @@ Once the iPython page is opened on the browser, the python scripts contained in 
 In the initial section of the script "Define Options" the user should set the options, while the input corresponding to the defined options should be entered in the folder \textit{NSP/input}. The main options to define are the following:
 
 \begin{itemize}
-\item Type of procedure to perform: either C$_R$-based, spo2ida-based or R-$\mu$-T-based. The main difference between the three is that C$_R$-based procedure is applicable to elasto-plastic idealised capacity curve only, while spo2ida-based and R-$\mu$-T-based procedure fit any kind of multilinear curve. Among the two procedures for multilinear capacity curves the main difference lies in the spo2ida-based ability to compute more accurately the record-to-record dispersion. 
+\item Type of procedure: either C$_R$-based, spo2ida-based or R-$\mu$-T-based. The main difference between the three is that C$_R$-based procedure is applicable to elasto-plastic idealised capacity curve only, while spo2ida-based and R-$\mu$-T-based procedure fit any kind of multilinear curve.
 \item Type of input: either results of a pushover analysis in terms of displacement vs base shear at each time step or idealised pushover curve, as shown in Figures \ref{fig:expPushover} and \ref{fig:expIdealised}.
 
 \begin{figure}[!htbp]
@@ -49,17 +49,17 @@ In the initial section of the script "Define Options" the user should set the op
 \label{fig:expVulnerability}
 \end{figure}
 
-The outputs could be found in the \textit{outputs} folder, located in the \textit{vulnerability} directory. The nonlinear static procedure with dispersion produces results in terms of spectral acceleration in units of g. Therefore the mean spectral acceleration of the lognormal fragility curves and the spectral acceleration levels corresponding to each loss ratio in the vulnerability curve are in units of g.
-These options and others need to be defined in the initial section of the script "Define Options". In section \ref{subsubsec:options} the alternatives values that the initial variables can assume and their meaning are described in detail, while the parameters to be inserted in the input files are listed below. They are fully described in section \ref{subsec:nls-ruiz-garcia-miranda} section \ref{subsec:nls-spo2ida} and section  \ref{subsec:nls-dolsek-fajfar}, within the presentation of each of the three procedures.
+The outputs are available in the \textit{outputs} folder, located in the \textit{vulnerability} directory. The nonlinear static procedures with dispersion produces results in terms of spectral acceleration in units of g.\\
+These options and others need to be defined in the initial section of the script "Define Options". In section \ref{subsubsec:options} the alternatives values that the initial variables can assume and their meaning are described in detail, while the parameters to be inserted in the input files are listed below. They are fully described in section \ref{subsec:nls-ruiz-garcia-miranda} section \ref{subsec:nls-spo2ida} and section  \ref{subsec:nls-dolsek-fajfar}, within the presentation of each procedure.
 
 \subsubsection{Options}
 \label{subsubsec:options}
 The type of procedure to be performed and the type of inputs at disposal, are set with the variables \textit{an\_type} and \textit{in\_type} respectively. With the variable \textit{an\_type} the user can choose between:
 
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
-an\_type = 0 #Cr-based procedure (Ruiz-Garcia and Miranda, 2007)
-an\_type = 1 #spo2ida-based procedure (Vamvatsikos and Cornell, 2006)
-an\_type = 2 #R-m-T-based procedure (Dolsek and Fajfar, 2004)
+an\_type = 0 # Cr-based procedure (Ruiz-Garcia and Miranda, 2007)
+an\_type = 1 # spo2ida-based procedure (Vamvatsikos and Cornell, 2006)
+an\_type = 2 # R-m-T-based procedure (Dolsek and Fajfar, 2004)
 \end{Verbatim}
 
 With the variable \textit{in\_type} the user can choose between:
@@ -76,7 +76,7 @@ vuln = 0 # derive fragility curves
 vuln = 1 # derive vulnerability curve
 \end{Verbatim}
 
-The variable \textit{g} serves the purpose of defining the units that are being used. A floating number must be assigned to the gravity acceleration, compatible with the units used for the period of vibration and for the displacements (if the period is expressed in seconds and displacements are in meters, then g = 9.81). The variable \textit{iml} is a numpy array that identifies the intensity measure levels for which loss ratios are computed and provided in the vulnerability curve. The variable \textit{MC} fix the number of Monte Carlo simulations to account for uncertainty in damage thresholds.
+The variable \textit{g} serves the purpose of defining the units that are used. A floating number must be assigned to the gravity acceleration, compatible with the units used for the period of vibration and for the displacements (if the period is expressed in seconds and displacements are in meters, then g = 9.81). The variable \textit{iml} is a numpy array that identifies the intensity measure levels for which loss ratios are computed and provided in the vulnerability curve. The variable \textit{MC} defines the number of Monte Carlo simulations to account for uncertainty in the damage thresholds.
 
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 g = 9.81
@@ -98,8 +98,6 @@ The following variables set some of the characteristics of the plots:
 \item \textit{fontsize}: fontsize used for labels, graphs etc.
 \item \textit{units}: list of 3 strings defining displacements, forces and Spectral acceleration units, as ['[kN]', '[m]', '[m/s$^2$]'], to be displayed on the axes of the plots.
 \end{itemize}
-
-The variable \textit{N} is needed for spo2ida-based procedure only and it represents the number of points per segment of IDA curve derived with spo2ida.
 
 The last set of variables is needed for R-$\mu$-T-based procedure only:
 \begin{itemize}
